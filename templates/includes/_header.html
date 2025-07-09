@@ -1,0 +1,28 @@
+<header class="header">
+    <div class="header-content">
+        <div class="logo">
+            <a href="{% url 'index' %}">
+                <span>気まぐれレシピ研究所</span>
+            </a>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-primary">ログイン</button>
+        </div>
+        <button class="hamburger" id="hamburger-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</header>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    
+    hamburgerBtn.addEventListener('click', function() {
+        this.classList.toggle('active');
+        // ここにメニューの表示/非表示ロジックを追加
+    });
+});
+</script>

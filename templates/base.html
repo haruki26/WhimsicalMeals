@@ -1,0 +1,22 @@
+{% load static compress %}
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Django Project{% endblock %}</title>
+    {% compress css %}
+    <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/main.scss' %}">
+    {% endcompress %}
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    {% include 'includes/_header.html' %}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    {% include 'includes/_footer.html' %}
+    {% block extra_body %}{% endblock %}
+</body>
+</html>
