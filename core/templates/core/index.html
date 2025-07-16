@@ -1,120 +1,254 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
 
-{% block title %}ホーム - My Django Project{% endblock %}
+{% block title %}Crazy Recipe Generator - 異次元料理生成システム{% endblock %}
 
 {% block content %}
-<div class="hero-section">
-    <div class="container">
-        <h1>Welcome to My Django Project</h1>
-        <p class="lead">現代的でレスポンシブなWebサイトへようこそ</p>
-        <div class="hero-actions">
-            <a href="#" class="btn btn-primary">Get Started</a>
-            <a href="#" class="btn btn-secondary">Learn More</a>
-        </div>
+<!-- ヒーローセクション -->
+<section class="hero">
+    <div class="hero-content">
+        <h1 class="hero-title">異次元料理生成システム</h1>
+        <p class="hero-subtitle">あなたの冷蔵庫にある材料で、想像を超えた料理名を生成！</p>
+        
+        {% if user.is_authenticated %}
+            <p class="welcome-message">ようこそ、{{ user.username }}さん！</p>
+            <div class="auth-buttons">
+                <a href="#generator" class="btn btn-primary">料理を生成する</a>
+                <a href="{% url 'users:logout' %}" class="btn btn-secondary">ログアウト</a>
+            </div>
+        {% else %}
+            <p class="auth-message">本格的な機能を使うには、ログインまたは新規登録してください。</p>
+            <div class="auth-buttons">
+                <a href="{% url 'users:login' %}" class="btn btn-primary">ログイン</a>
+                <a href="{% url 'users:signup' %}" class="btn btn-secondary">新規登録</a>
+            </div>
+        {% endif %}
     </div>
-</div>
+</section>
 
-<section class="features">
+<!-- デモセクション -->
+<section class="demo-section" id="demo">
     <div class="container">
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h3>機能 1</h3>
-                <p>素晴らしい機能の説明がここに入ります。</p>
+        <h2>デモ体験</h2>
+        <p>ログインなしでも簡単な料理名生成を体験できます！</p>
+        
+        <div class="demo-generator">
+            <div class="ingredients-input">
+                <label for="demo-ingredients">材料を入力してください（2つ以上）:</label>
+                <div class="ingredient-tags" id="demo-ingredient-tags"></div>
+                <input type="text" id="demo-ingredient-input" placeholder="例: トマト" />
+                <button type="button" id="add-ingredient-btn" class="btn btn-small">追加</button>
             </div>
-            <div class="feature-card">
-                <h3>機能 2</h3>
-                <p>もう一つの素晴らしい機能の説明がここに入ります。</p>
-            </div>
-            <div class="feature-card">
-                <h3>機能 3</h3>
-                <p>さらに別の素晴らしい機能の説明がここに入ります。</p>
+            
+            <button type="button" id="demo-generate-btn" class="btn btn-primary" disabled>
+                デモ料理名を生成
+            </button>
+            
+            <div class="result-display" id="demo-result" style="display: none;">
+                <h3>生成された料理名:</h3>
+                <div class="dish-card">
+                    <span class="dish-name" id="generated-dish-name"></span>
+                    <div class="ingredients-used">
+                        使用材料: <span id="used-ingredients"></span>
+                    </div>
+                </div>
+                <p class="demo-notice">
+                    ※ これはデモ版です。ログインすると、より高度な機能をお使いいただけます。
+                </p>
             </div>
         </div>
     </div>
 </section>
 
-<style>
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
+<!-- 機能紹介セクション -->
+<section class="features-section">
+    <div class="container">
+        <h2>主な機能</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>🎲 ランダム料理生成</h3>
+                <p>冷蔵庫の材料を入力するだけで、想像もつかない料理名を自動生成します。</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>👍 いいね機能</h3>
+                <p>気に入った料理名にいいねを押して、お気に入りコレクションを作成できます。</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🏆 ランキング表示</h3>
+                <p>みんなが作った料理名の人気ランキングをチェック！話題の料理名をチェックしよう。</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>📱 レスポンシブ対応</h3>
+                <p>スマートフォン、タブレット、PCなど、どんなデバイスからでも快適に利用できます。</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-.hero-section {
-    text-align: center;
-    padding: 80px 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    margin-bottom: 60px;
-    border-radius: 0 0 20px 20px;
-}
+<!-- 人気ランキングセクション -->
+<section class="ranking-section">
+    <div class="container">
+        <h2>🔥 今話題の料理名ランキング</h2>
+        <div class="ranking-list">
+            <div class="ranking-item">
+                <span class="rank">1位</span>
+                <div class="dish-info">
+                    <span class="dish-name">謎のトマトキャベツ爆弾</span>
+                    <span class="likes-count">🔥 128 いいね</span>
+                </div>
+            </div>
+            
+            <div class="ranking-item">
+                <span class="rank">2位</span>
+                <div class="dish-info">
+                    <span class="dish-name">伝説のニンジンとタマネギの異次元</span>
+                    <span class="likes-count">❤️ 95 いいね</span>
+                </div>
+            </div>
+            
+            <div class="ranking-item">
+                <span class="rank">3位</span>
+                <div class="dish-info">
+                    <span class="dish-name">幻のジャガイモ怪物</span>
+                    <span class="likes-count">⭐ 87 いいね</span>
+                </div>
+            </div>
+            
+            <div class="ranking-item">
+                <span class="rank">4位</span>
+                <div class="dish-info">
+                    <span class="dish-name">秘伝のブロッコリー入りピーマン混沌</span>
+                    <span class="likes-count">💫 72 いいね</span>
+                </div>
+            </div>
+            
+            <div class="ranking-item">
+                <span class="rank">5位</span>
+                <div class="dish-info">
+                    <span class="dish-name">究極のナス風チーズの禁断</span>
+                    <span class="likes-count">✨ 68 いいね</span>
+                </div>
+            </div>
+        </div>
+        
+        {% if not user.is_authenticated %}
+            <div class="login-prompt">
+                <p>ランキング機能をフルに楽しむには、ログインが必要です。</p>
+                <a href="{% url 'users:login' %}" class="btn btn-primary">今すぐログイン</a>
+            </div>
+        {% endif %}
+    </div>
+</section>
 
-.hero-section h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-    font-weight: 700;
-}
+<!-- CTA セクション -->
+<section class="cta-section">
+    <div class="container">
+        <h2>今すぐ始めよう！</h2>
+        <p>異次元の料理名生成の世界へ飛び込んでみませんか？</p>
+        
+        {% if not user.is_authenticated %}
+            <div class="cta-buttons">
+                <a href="{% url 'users:signup' %}" class="btn btn-primary btn-large">無料で新規登録</a>
+                <a href="{% url 'users:login' %}" class="btn btn-secondary btn-large">既にアカウントをお持ちの方</a>
+            </div>
+        {% else %}
+            <div class="cta-buttons">
+                <a href="#generator" class="btn btn-primary btn-large">料理を生成する</a>
+            </div>
+        {% endif %}
+    </div>
+</section>
 
-.lead {
-    font-size: 1.3rem;
-    margin-bottom: 30px;
-    opacity: 0.9;
-}
-
-.hero-actions {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.features {
-    padding: 60px 0;
-}
-
-.feature-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-}
-
-.feature-card {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-.feature-card:hover {
-    transform: translateY(-5px);
-}
-
-.feature-card h3 {
-    color: #2c3e50;
-    margin-bottom: 15px;
-    font-size: 1.5rem;
-}
-
-.feature-card p {
-    color: #7f8c8d;
-    line-height: 1.6;
-}
-
-@media (max-width: 768px) {
-    .hero-section h1 {
-        font-size: 2rem;
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ingredientInput = document.getElementById('demo-ingredient-input');
+    const addIngredientBtn = document.getElementById('add-ingredient-btn');
+    const ingredientTags = document.getElementById('demo-ingredient-tags');
+    const generateBtn = document.getElementById('demo-generate-btn');
+    const resultDiv = document.getElementById('demo-result');
+    const dishNameSpan = document.getElementById('generated-dish-name');
+    const usedIngredientsSpan = document.getElementById('used-ingredients');
+    
+    let ingredients = [];
+    
+    function updateIngredientTags() {
+        ingredientTags.innerHTML = '';
+        ingredients.forEach((ingredient, index) => {
+            const tag = document.createElement('span');
+            tag.className = 'ingredient-tag';
+            tag.innerHTML = `${ingredient} <button type="button" onclick="removeIngredient(${index})">×</button>`;
+            ingredientTags.appendChild(tag);
+        });
+        
+        generateBtn.disabled = ingredients.length < 2;
     }
     
-    .hero-actions {
-        flex-direction: column;
-        align-items: center;
+    function addIngredient() {
+        const value = ingredientInput.value.trim();
+        if (value && !ingredients.includes(value)) {
+            ingredients.push(value);
+            ingredientInput.value = '';
+            updateIngredientTags();
+        }
     }
     
-    .feature-grid {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
+    window.removeIngredient = function(index) {
+        ingredients.splice(index, 1);
+        updateIngredientTags();
+    };
+    
+    addIngredientBtn.addEventListener('click', addIngredient);
+    
+    ingredientInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            addIngredient();
+        }
+    });
+    
+    generateBtn.addEventListener('click', async function() {
+        if (ingredients.length < 2) return;
+        
+        try {
+            generateBtn.disabled = true;
+            generateBtn.textContent = '生成中...';
+            
+            // CSRFトークンを取得
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || 
+                             document.querySelector('[name=csrfmiddlewaretoken]')?.value || 
+                             '';
+            
+            const response = await fetch('{% url "demo_generate_dish_class" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({
+                    ingredients: ingredients
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                dishNameSpan.textContent = data.dish_name;
+                usedIngredientsSpan.textContent = data.ingredients_used.join(', ');
+                resultDiv.style.display = 'block';
+                resultDiv.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert(data.error || 'エラーが発生しました');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('通信エラーが発生しました');
+        } finally {
+            generateBtn.disabled = ingredients.length < 2;
+            generateBtn.textContent = 'デモ料理名を生成';
+        }
+    });
+});
+</script>
 {% endblock %}
