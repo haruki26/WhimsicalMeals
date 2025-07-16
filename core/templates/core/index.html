@@ -13,13 +13,15 @@
         {% if user.is_authenticated %}
             <p class="welcome-message">ようこそ、{{ user.username }}さん！</p>
             <div class="auth-buttons">
-                <a href="#generator" class="btn btn-primary">料理を生成する</a>
+                <a href="{% url 'dishes:generate' %}" class="btn btn-primary">料理を生成する</a>
+                <a href="{% url 'dishes:list' %}" class="btn btn-outline">マイ料理</a>
                 <a href="{% url 'users:logout' %}" class="btn btn-secondary">ログアウト</a>
             </div>
         {% else %}
             <p class="auth-message">本格的な機能を使うには、ログインまたは新規登録してください。</p>
             <div class="auth-buttons">
-                <a href="{% url 'users:login' %}" class="btn btn-primary">ログイン</a>
+                <a href="{% url 'dishes:demo' %}" class="btn btn-primary">デモを試す</a>
+                <a href="{% url 'users:login' %}" class="btn btn-outline">ログイン</a>
                 <a href="{% url 'users:signup' %}" class="btn btn-secondary">新規登録</a>
             </div>
         {% endif %}
@@ -85,6 +87,14 @@
                 <p>スマートフォン、タブレット、PCなど、どんなデバイスからでも快適に利用できます。</p>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- 最新料理セクション -->
+<section class="recent-section">
+    <div class="container">
+        <h2>🆕 みんなの最新料理</h2>
+        {% include "components/recent_dishes.html" with dishes=recent_dishes show_more_link=True %}
     </div>
 </section>
 

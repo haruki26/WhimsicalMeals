@@ -1,10 +1,11 @@
 <nav class="nav-menu" id="nav-menu">
     {% if user.is_authenticated %}
         <a href="{% url 'ingredients:list' %}" class="nav-link">🥬 材料管理</a>
-        <a href="#" class="nav-link">🎲 料理生成</a>
-        <a href="#" class="nav-link">📋 マイ料理</a>
+        <a href="{% url 'dishes:generate' %}" class="nav-link">🎲 料理生成</a>
+        <a href="{% url 'dishes:list' %}" class="nav-link">📋 マイ料理</a>
     {% endif %}
-    <a href="#" class="nav-link">🏆 ランキング</a>
+    <a href="{% url 'dishes:recent' %}" class="nav-link">🆕 最新料理</a>
+    <a href="{% url 'dishes:ranking' %}" class="nav-link">🏆 ランキング</a>
 </nav>
 
 <button class="nav-toggle" id="nav-toggle">

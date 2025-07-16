@@ -1,0 +1,647 @@
+// 料理生成関連のスタイル
+
+// 共通コンテナ
+.dish-generate-container,
+.dish-list-container,
+.ranking-container,
+.delete-container,
+.demo-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+
+    @media (max-width: 768px) {
+        padding: 1rem;
+    }
+}
+
+// ヘッダーセクション
+.header-section {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    h1 {
+        color: $color-fg-primary;
+        margin-bottom: 0.5rem;
+        font-size: 2.5rem;
+
+        @media (max-width: 768px) {
+            font-size: 2rem;
+        }
+    }
+
+    p {
+        color: $color-fg-secondary;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+}
+
+// 材料不足アラート
+.insufficient-ingredients {
+    max-width: 600px;
+    margin: 0 auto;
+
+    .alert {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 8px;
+        padding: 2rem;
+        text-align: center;
+
+        h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+    }
+}
+
+// 材料情報表示
+.ingredients-info {
+    background: $color-bg-tertiary;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+
+    h3 {
+        color: $color-fg-primary;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+}
+
+// 材料タグ
+.ingredient-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+
+    .ingredient-tag {
+        background: linear-gradient(135deg, #a8e6cf, #7fcdcd);
+        color: #2d3436;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+        }
+    }
+}
+
+// 生成セクション
+.generate-section {
+    text-align: center;
+    margin: 3rem 0;
+
+    .generate-form {
+        display: inline-block;
+    }
+}
+
+// 生成ボタン
+.btn-generate {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+
+    .btn-icon {
+        font-size: 1.5rem;
+        margin-right: 0.5rem;
+    }
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+    }
+
+    &:active {
+        transform: translateY(-1px);
+    }
+}
+
+// 生成された料理表示
+.generated-dishes {
+    margin-top: 3rem;
+
+    h3 {
+        text-align: center;
+        color: $color-fg-primary;
+        margin-bottom: 2rem;
+        font-size: 1.8rem;
+    }
+}
+
+.dishes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+.dish-card {
+    background: $color-bg-tertiary;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .dish-name {
+        color: $color-fg-primary;
+        font-size: 1.4rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+        line-height: 1.4;
+    }
+
+    .dish-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+        color: $color-fg-secondary;
+        margin-bottom: 1rem;
+
+        @media (max-width: 480px) {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    }
+
+    .dish-ingredients {
+        margin: 1.5rem 0;
+
+        h4 {
+            color: $color-fg-primary;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+    }
+
+    .dish-actions {
+        margin-top: 1.5rem;
+    }
+
+    &.demo-dish {
+        border: 2px dashed #ddd;
+        position: relative;
+
+        .demo-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #6c757d;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+    }
+}
+
+// 保存ボタン
+.btn-save {
+    background: linear-gradient(135deg, #00b894, #00cec9);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
+    }
+}
+
+// 再生成セクション
+.regenerate-section {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+// リンクセクション
+.links-section {
+    margin-top: 4rem;
+}
+
+.quick-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+// ランキング専用スタイル
+.ranking-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    background: $color-bg-tertiary;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .rank-badge {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1.5rem;
+        flex-shrink: 0;
+
+        @media (max-width: 768px) {
+            margin-right: 0;
+        }
+
+        .medal {
+            font-size: 2rem;
+        }
+
+        .rank-number {
+            background: $color-bg-secondary;
+            color: $color-fg-primary;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+    }
+
+    .dish-content {
+        flex: 1;
+
+        .dish-header {
+            margin-bottom: 1rem;
+
+            .dish-name {
+                color: $color-fg-primary;
+                font-size: 1.3rem;
+                font-weight: bold;
+                margin-bottom: 0.5rem;
+            }
+
+            .dish-meta {
+                display: flex;
+                gap: 1rem;
+                font-size: 0.9rem;
+                color: $color-fg-secondary;
+
+                @media (max-width: 480px) {
+                    flex-direction: column;
+                    gap: 0.25rem;
+                }
+            }
+        }
+    }
+
+    .likes-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+
+        .likes-count {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .like-form {
+            margin: 0;
+        }
+
+        .btn-like {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+            }
+
+            &.btn-liked {
+                background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+            }
+        }
+
+        .own-dish {
+            color: $color-fg-secondary;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+    }
+}
+
+// 削除ページ
+.delete-container {
+    max-width: 600px;
+
+    .delete-card {
+        background: $color-bg-tertiary;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .delete-header {
+        text-align: center;
+        margin-bottom: 2rem;
+
+        h1 {
+            color: #e74c3c;
+        }
+    }
+
+    .dish-info {
+        background: $color-bg-secondary;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+
+        .dish-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: $color-fg-primary;
+            margin-bottom: 1rem;
+        }
+
+        .meta-item {
+            margin-bottom: 0.5rem;
+            color: $color-fg-secondary;
+        }
+
+        .dish-ingredients {
+            margin-top: 1rem;
+        }
+    }
+
+    .warning-message {
+        .alert-warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+    }
+
+    .delete-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+
+        @media (max-width: 480px) {
+            flex-direction: column;
+        }
+    }
+}
+
+// デモページ
+.demo-form-section {
+    max-width: 600px;
+    margin: 0 auto 3rem;
+
+    .demo-form {
+        background: $color-bg-tertiary;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+        .form-group {
+            margin-bottom: 1.5rem;
+
+            label {
+                display: block;
+                margin-bottom: 0.5rem;
+                color: $color-fg-primary;
+                font-weight: 500;
+            }
+
+            .form-control {
+                width: 100%;
+                padding: 1rem;
+                border: 2px solid #ddd;
+                border-radius: 8px;
+                font-size: 1rem;
+                transition: border-color 0.3s ease;
+
+                &:focus {
+                    outline: none;
+                    border-color: #3498db;
+                }
+            }
+
+            .form-help {
+                color: $color-fg-secondary;
+                font-size: 0.9rem;
+                margin-top: 0.5rem;
+            }
+        }
+    }
+}
+
+.demo-examples {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    h3 {
+        color: $color-fg-primary;
+        margin-bottom: 1rem;
+    }
+
+    .example-tags {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+
+        .example-tag {
+            background: $color-bg-secondary;
+            border: 2px solid #ddd;
+            color: $color-fg-primary;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: #3498db;
+                color: white;
+                border-color: #3498db;
+            }
+        }
+    }
+}
+
+.demo-notice {
+    background: #e8f4f8;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+
+    small {
+        color: #2c3e50;
+    }
+
+    a {
+        color: #3498db;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.signup-prompt {
+    margin-top: 3rem;
+
+    .prompt-card {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 2rem;
+        border-radius: 12px;
+        text-align: center;
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .prompt-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+
+            @media (max-width: 480px) {
+                flex-direction: column;
+            }
+        }
+    }
+}
+
+// 空の状態
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+
+    .empty-content {
+        max-width: 400px;
+        margin: 0 auto;
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            color: $color-fg-primary;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: $color-fg-secondary;
+            margin-bottom: 2rem;
+        }
+    }
+}
+
+// ユーザーアクション
+.user-actions,
+.actions-section {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    .btn {
+        margin: 0 0.5rem;
+
+        @media (max-width: 480px) {
+            display: block;
+            margin: 0.5rem 0;
+        }
+    }
+}
+
+.guest-info {
+    text-align: center;
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+
+    a {
+        color: #3498db;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

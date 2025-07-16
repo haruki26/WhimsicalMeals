@@ -1,0 +1,52 @@
+{% comment %}
+最新料理表示コンポーネント
+使用方法: {% include "components/recent_dishes.html" with dishes=recent_dishes show_more_link=True %}
+{% endcomment %}
+
+{% if dishes %}
+    <div class="recent-list">
+        {% for dish in dishes %}
+            <div class="recent-item">
+                <div class="dish-info">
+                    <h3>{{ dish.name }}</h3>
+                    <p class="dish-meta">
+                        作成者: {{ dish.user.username }} | 
+                        材料: {% for ingredient in dish.ingredients.all %}{{ ingredient.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    </p>
+                </div>
+                <div class="dish-stats">
+                    {% if user.is_authenticated and user != dish.user %}
+                        <form method="post" action="{% url 'dishes:toggle_like' dish.id %}" class="like-form">
+                            {% csrf_token %}
+                            {% if dish.id in user_liked_dish_ids %}
+                                <button type="submit" class="like-btn liked">
+                                    ❤️ {{ dish.likes_count }}
+                                </button>
+                            {% else %}
+                                <button type="submit" class="like-btn">
+                                    🤍 {{ dish.likes_count }}
+                                </button>
+                            {% endif %}
+                        </form>
+                    {% else %}
+                        <span class="likes">❤️ {{ dish.likes_count }}</span>
+                    {% endif %}
+                    <span class="date">{{ dish.created_at|date:"m/d H:i" }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% if show_more_link %}
+        <div class="section-footer">
+            <a href="{% url 'dishes:recent' %}" class="btn btn-outline">もっと見る</a>
+        </div>
+    {% endif %}
+{% else %}
+    <p class="no-dishes">まだ料理が投稿されていません。</p>
+    {% if not user.is_authenticated %}
+        <div class="auth-prompt">
+            <a href="{% url 'users:login' %}" class="btn btn-primary">ログインして料理を作成</a>
+            <a href="{% url 'users:signup' %}" class="btn btn-secondary">新規登録</a>
+        </div>
+    {% endif %}
+{% endif %}

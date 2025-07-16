@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}マイ料理 - 気まぐれレシピ研究所{% endblock %}
+
+{% block content %}
+<div class="dish-list-container">
+    <div class="header-section">
+        <h1>📋 マイ料理</h1>
+        <p>あなたが生成・保存した架空料理のコレクションです</p>
+    </div>
+
+    <div class="actions-section">
+        <a href="{% url 'dishes:generate' %}" class="btn btn-primary">
+            🎲 新しい料理を生成する
+        </a>
+    </div>
+
+    {% if dishes %}
+        <div class="dishes-grid">
+            {% for dish in dishes %}
+                <div class="dish-card">
+                    <div class="dish-header">
+                        <h3 class="dish-name">{{ dish.name }}</h3>
+                        <div class="dish-meta">
+                            <span class="likes-count">❤️ {{ dish.likes_count }}</span>
+                            <span class="created-date">{{ dish.created_at|date:"Y/m/d" }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="dish-ingredients">
+                        <h4>使用材料:</h4>
+                        <div class="ingredient-tags">
+                            {% for ingredient in dish.ingredients.all %}
+                                <span class="ingredient-tag">{{ ingredient.name }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="dish-actions">
+                        <a href="{% url 'dishes:delete' dish.id %}" class="btn btn-danger btn-sm">
+                            🗑️ 削除
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- ページネーション -->
+        {% include "components/pagination.html" %}
+        
+    {% else %}
+        <div class="empty-state">
+            <div class="empty-content">
+                <div class="empty-icon">🍽️</div>
+                <h3>まだ料理がありません</h3>
+                <p>料理名を生成して、気に入ったものを保存してみましょう！</p>
+                <a href="{% url 'dishes:generate' %}" class="btn btn-primary">
+                    🎲 料理を生成する
+                </a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

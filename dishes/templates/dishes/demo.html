@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}料理生成デモ - 気まぐれレシピ研究所{% endblock %}
+
+{% block content %}
+<div class="demo-container">
+    <div class="header-section">
+        <h1>🎲 料理生成デモ</h1>
+        <p>材料を入力して、架空料理名生成を体験してみましょう！</p>
+        <div class="demo-notice">
+            <small>💡 デモで生成した料理は保存されません。保存機能を使うには<a href="{% url 'users:login' %}">ログイン</a>してください。</small>
+        </div>
+    </div>
+
+    {% if not generated_dishes %}
+        <div class="demo-form-section">
+            <form method="post" class="demo-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="ingredients">材料を入力してください（カンマ区切り）:</label>
+                    <input 
+                        type="text" 
+                        id="ingredients" 
+                        name="ingredients" 
+                        placeholder="例: 卵, ネギ, チーズ, 期限切れの牛乳"
+                        class="form-control"
+                        required
+                    >
+                    <small class="form-help">少なくとも2つの材料を入力してください</small>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-generate">
+                    <span class="btn-icon">🎲</span>
+                    料理名を生成する
+                </button>
+            </form>
+        </div>
+
+        <div class="demo-examples">
+            <h3>入力例:</h3>
+            <div class="example-tags">
+                <button type="button" class="example-tag" onclick="fillExample('卵, ネギ, チーズ')">
+                    卵, ネギ, チーズ
+                </button>
+                <button type="button" class="example-tag" onclick="fillExample('じゃがいも, 玉ねぎ, 人参, 牛肉')">
+                    じゃがいも, 玉ねぎ, 人参, 牛肉
+                </button>
+                <button type="button" class="example-tag" onclick="fillExample('期限切れの牛乳, パン, はちみつ')">
+                    期限切れの牛乳, パン, はちみつ
+                </button>
+            </div>
+        </div>
+    {% else %}
+        <div class="demo-results">
+            <div class="input-materials">
+                <h3>入力した材料:</h3>
+                <div class="ingredient-tags">
+                    {% for ingredient in input_ingredients %}
+                        <span class="ingredient-tag">{{ ingredient }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="generated-dishes">
+                <h3>✨ 生成された架空料理</h3>
+                <div class="dishes-grid">
+                    {% for dish_name in generated_dishes %}
+                        <div class="dish-card demo-dish">
+                            <h4 class="dish-name">{{ dish_name }}</h4>
+                            <div class="demo-badge">デモ</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="demo-actions">
+                <form method="post" class="regenerate-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="ingredients" value="{% for ingredient in input_ingredients %}{{ ingredient }}{% if not forloop.last %}, {% endif %}{% endfor %}">
+                    <button type="submit" class="btn btn-secondary">
+                        🔄 別の料理を生成する
+                    </button>
+                </form>
+                
+                <a href="{% url 'dishes:demo' %}" class="btn btn-outline">
+                    🔄 新しい材料で試す
+                </a>
+            </div>
+
+            <div class="signup-prompt">
+                <div class="prompt-card">
+                    <h3>気に入った料理は保存しませんか？</h3>
+                    <p>アカウントを作成すると、生成した料理を保存して、他のユーザーとシェアできます！</p>
+                    <div class="prompt-actions">
+                        <a href="{% url 'users:signup' %}" class="btn btn-primary">
+                            新規登録
+                        </a>
+                        <a href="{% url 'users:login' %}" class="btn btn-outline">
+                            ログイン
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+function fillExample(ingredients) {
+    document.getElementById('ingredients').value = ingredients;
+}
+</script>
+{% endblock %}

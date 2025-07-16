@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block title %}料理ランキング - 気まぐれレシピ研究所{% endblock %}
+
+{% block content %}
+<div class="ranking-container">
+    <div class="header-section">
+        <h1>🏆 架空料理ランキング</h1>
+        <p>みんなが生成した面白い架空料理をいいね数順にランキング！</p>
+    </div>
+
+    {% if user.is_authenticated %}
+        <div class="user-actions">
+            <a href="{% url 'dishes:generate' %}" class="btn btn-primary">
+                🎲 料理を生成する
+            </a>
+            <a href="{% url 'dishes:list' %}" class="btn btn-outline">
+                📋 マイ料理を見る
+            </a>
+        </div>
+        
+        <!-- ページネーション -->
+        {% include "components/pagination.html" %}
+        
+    {% else %}
+        <div class="guest-info">
+            <p>
+                <a href="{% url 'users:login' %}">ログイン</a>すると、
+                料理を生成したり、いいねを付けたりできます！
+            </p>
+        </div>
+    {% endif %}
+
+    {% if dishes %}
+        <div class="ranking-list">
+            {% for dish in dishes %}
+                <div class="ranking-item" data-rank="{{ forloop.counter }}">
+                    <div class="rank-badge">
+                        {% if forloop.counter <= 3 %}
+                            <span class="medal medal-{{ forloop.counter }}">
+                                {% if forloop.counter == 1 %}🥇
+                                {% elif forloop.counter == 2 %}🥈
+                                {% else %}🥉
+                                {% endif %}
+                            </span>
+                        {% else %}
+                            <span class="rank-number">{{ forloop.counter }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="dish-content">
+                        <div class="dish-header">
+                            <h3 class="dish-name">{{ dish.name }}</h3>
+                            <div class="dish-meta">
+                                <span class="author">by {{ dish.user.username }}</span>
+                                <span class="created-date">{{ dish.created_at|date:"Y/m/d" }}</span>
+                            </div>
+                        </div>
+
+                        <div class="dish-ingredients">
+                            <div class="ingredient-tags">
+                                {% for ingredient in dish.ingredients.all %}
+                                    <span class="ingredient-tag">{{ ingredient.name }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="likes-section">
+                        <div class="likes-count">
+                            ❤️ {{ dish.likes_count }}
+                        </div>
+                        
+                        {% if user.is_authenticated and user != dish.user %}
+                            <form method="post" action="{% url 'dishes:toggle_like' dish.id %}" class="like-form">
+                                {% csrf_token %}
+                                {% if user in dish.likes.all %}
+                                    <button type="submit" class="btn btn-like btn-liked">
+                                        💔 いいね取消
+                                    </button>
+                                {% else %}
+                                    <button type="submit" class="btn btn-like">
+                                        ❤️ いいね
+                                    </button>
+                                {% endif %}
+                            </form>
+                        {% elif user == dish.user %}
+                            <span class="own-dish">あなたの料理</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- ページネーション -->
+        {% if is_paginated %}
+            <div class="pagination-wrapper">
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1" class="page-link">&laquo; 最初</a>
+                        <a href="?page={{ page_obj.previous_page_number }}" class="page-link">前へ</a>
+                    {% endif %}
+
+                    <span class="page-info">
+                        {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}" class="page-link">次へ</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">最後 &raquo;</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="empty-state">
+            <div class="empty-content">
+                <div class="empty-icon">🏆</div>
+                <h3>まだランキングに料理がありません</h3>
+                <p>最初の料理を生成して、ランキングを作りましょう！</p>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'dishes:generate' %}" class="btn btn-primary">
+                        🎲 料理を生成する
+                    </a>
+                {% else %}
+                    <a href="{% url 'users:login' %}" class="btn btn-primary">
+                        ログインして始める
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

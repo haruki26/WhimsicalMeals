@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}料理生成 - 気まぐれレシピ研究所{% endblock %}
+
+{% block content %}
+<div class="dish-generate-container">
+    <div class="header-section">
+        <h1>🎲 架空料理名生成</h1>
+        <p>あなたの材料から、誰も食べたことのないような架空の料理名を生成します！</p>
+    </div>
+
+    {% if ingredients_count < 2 %}
+        <div class="insufficient-ingredients">
+            <div class="alert alert-warning">
+                <h3>⚠️ 材料が不足しています</h3>
+                <p>料理を生成するには少なくとも2つの材料が必要です。</p>
+                <p>現在登録されている材料: {{ ingredients_count }}個</p>
+                <a href="{% url 'ingredients:list' %}" class="btn btn-primary">材料を登録する</a>
+            </div>
+        </div>
+    {% else %}
+        <div class="ingredients-info">
+            <h3>🥬 使用可能な材料 ({{ ingredients_count }}個)</h3>
+            <div class="ingredient-tags">
+                {% for ingredient in user_ingredients %}
+                    <span class="ingredient-tag">{{ ingredient.name }}</span>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="generate-section">
+            <form method="post" class="generate-form">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-generate">
+                    <span class="btn-icon">🎲</span>
+                    料理名を生成する
+                </button>
+            </form>
+        </div>
+
+        {% if generated_dishes %}
+            <div class="generated-dishes">
+                <h3>✨ 生成された架空料理</h3>
+                <div class="dishes-grid">
+                    {% for dish_name in generated_dishes %}
+                        <div class="dish-card">
+                            <h4 class="dish-name">{{ dish_name }}</h4>
+                            <form method="post" action="{% url 'dishes:save' %}" class="save-form">
+                                {% csrf_token %}
+                                <input type="hidden" name="dish_name" value="{{ dish_name }}">
+                                {% for ingredient in user_ingredients %}
+                                    <input type="hidden" name="ingredient_ids" value="{{ ingredient.id }}">
+                                {% endfor %}
+                                <button type="submit" class="btn btn-save">
+                                    💾 保存する
+                                </button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="regenerate-section">
+                    <form method="post" class="regenerate-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-secondary">
+                            🔄 別の料理を生成する
+                        </button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <div class="links-section">
+        <div class="quick-links">
+            <a href="{% url 'dishes:list' %}" class="btn btn-outline">📋 保存済み料理を見る</a>
+            <a href="{% url 'dishes:ranking' %}" class="btn btn-outline">🏆 ランキングを見る</a>
+            <a href="{% url 'ingredients:create' %}" class="btn btn-outline">🥬 材料を追加する</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

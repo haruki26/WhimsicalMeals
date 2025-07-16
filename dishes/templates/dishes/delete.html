@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}料理の削除 - 気まぐれレシピ研究所{% endblock %}
+
+{% block content %}
+<div class="delete-container">
+    <div class="delete-card">
+        <div class="delete-header">
+            <h1>🗑️ 料理の削除</h1>
+        </div>
+
+        <div class="delete-content">
+            <div class="dish-info">
+                <h3>削除する料理:</h3>
+                <div class="dish-name">{{ dish.name }}</div>
+                
+                <div class="dish-meta">
+                    <div class="meta-item">
+                        <strong>作成日:</strong> {{ dish.created_at|date:"Y年m月d日 H:i" }}
+                    </div>
+                    <div class="meta-item">
+                        <strong>いいね数:</strong> {{ dish.likes_count }}
+                    </div>
+                </div>
+
+                <div class="dish-ingredients">
+                    <strong>使用材料:</strong>
+                    <div class="ingredient-tags">
+                        {% for ingredient in dish.ingredients.all %}
+                            <span class="ingredient-tag">{{ ingredient.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning-message">
+                <div class="alert alert-warning">
+                    <strong>⚠️ 注意</strong>
+                    <p>この操作は取り消すことができません。本当に削除しますか？</p>
+                </div>
+            </div>
+
+            <div class="delete-actions">
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        🗑️ 削除する
+                    </button>
+                    <a href="{% url 'dishes:list' %}" class="btn btn-secondary">
+                        キャンセル
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

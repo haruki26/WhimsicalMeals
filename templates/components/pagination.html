@@ -1,0 +1,29 @@
+{% comment %}
+ページネーションコンポーネント
+使用方法: {% include "components/pagination.html" %}
+page_objが存在し、is_paginatedがTrueの場合に表示されます
+{% endcomment %}
+
+{% if is_paginated %}
+<div class="pagination-container">
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="page-link">最初</a>
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="page-link">前へ</a>
+        {% endif %}
+        
+        <span class="page-info">
+            {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+        </span>
+        
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="page-link">次へ</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="page-link">最後</a>
+        {% endif %}
+    </div>
+    
+    <div class="page-summary">
+        全{{ page_obj.paginator.count }}件中 {{ page_obj.start_index }}〜{{ page_obj.end_index }}件を表示
+    </div>
+</div>
+{% endif %}

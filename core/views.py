@@ -2,9 +2,12 @@ import json
 import random
 from typing import Any
 
+from django.db.models import QuerySet
 from django.http import HttpRequest, JsonResponse
 from django.views import View
 from django.views.generic import TemplateView
+
+from dishes.models import GeneratedDish, Like
 
 MIN_INGREDIENTS = 2
 
@@ -15,7 +18,32 @@ class CoreView(TemplateView):
     template_name = "core/index.html"
 
     def get_context_data(self, **kwargs: object) -> dict[str, Any]:
-        return super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
+        # 最新料理を3つ取得
+        recent_dishes = self.get_recent_dishes(limit=3)
+        context["recent_dishes"] = recent_dishes
+
+        # ユーザーのいいね情報を取得
+        if self.request.user.is_authenticated:
+            liked_dish_ids = Like.objects.filter(
+                user=self.request.user,
+                dish__in=recent_dishes,
+            ).values_list("dish_id", flat=True)
+            context["user_liked_dish_ids"] = list(liked_dish_ids)
+        else:
+            context["user_liked_dish_ids"] = []
+
+        return context
+
+    def get_recent_dishes(self, limit: int | None = None) -> QuerySet[GeneratedDish]:
+        """最新料理を取得するメソッド."""
+        queryset = GeneratedDish.objects.order_by("-created_at").prefetch_related(
+            "ingredients",
+            "user",
+        )
+        if limit:
+            return queryset[:limit]
+        return queryset
 
 
 def demo_generate_dish(request: HttpRequest) -> JsonResponse:
