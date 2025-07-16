@@ -51,13 +51,9 @@ main {
     }
 }
 
-// コンポーネントのインポート
+// コンポーネントのインポート（共通のみ）
 @import 'components/header';
 @import 'components/nav';
 @import 'components/footer';
 @import 'components/hamburger';
-@import 'components/auth';
-@import 'components/index';
-@import 'components/ingredients';
-@import 'components/dishes';
 @import 'components/pagination';
