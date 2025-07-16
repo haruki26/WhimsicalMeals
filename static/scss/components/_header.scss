@@ -27,8 +27,18 @@
     }
 
     .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .user-greeting {
+            color: $color-fg-primary;
+            font-size: 0.9rem;
+            margin-right: 8px;
+        }
+
         .btn {
-            padding: 10px 20px;
+            padding: 8px 16px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
@@ -36,6 +46,7 @@
             text-decoration: none;
             transition: all 0.3s ease;
             display: inline-block;
+            font-size: 0.9rem;
 
             &.btn-primary {
                 background-color: #3498db;
@@ -43,6 +54,16 @@
 
                 &:hover {
                     background-color: #2980b9;
+                    transform: translateY(-2px);
+                }
+            }
+
+            &.btn-secondary {
+                background-color: #95a5a6;
+                color: #fff;
+
+                &:hover {
+                    background-color: #7f8c8d;
                     transform: translateY(-2px);
                 }
             }

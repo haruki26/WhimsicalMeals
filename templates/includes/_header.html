@@ -6,7 +6,13 @@
             </a>
         </div>
         <div class="header-actions">
-            <button class="btn btn-primary">ログイン</button>
+            {% if user.is_authenticated %}
+                <span class="user-greeting">こんにちは、{{ user.username }}さん</span>
+                <a href="{% url 'users:logout' %}" class="btn btn-secondary">ログアウト</a>
+            {% else %}
+                <a href="{% url 'users:login' %}" class="btn btn-primary">ログイン</a>
+                <a href="{% url 'users:signup' %}" class="btn btn-secondary">新規登録</a>
+            {% endif %}
         </div>
         <button class="hamburger" id="hamburger-btn">
             <span></span>

@@ -1,0 +1,150 @@
+// 認証フォーム関連のスタイル
+.auth-container {
+    max-width: 400px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.auth-form {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: $color-fg-primary;
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+}
+
+.form-group {
+    margin-bottom: 20px;
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: $color-fg-secondary;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+        font-family: inherit;
+
+        &:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        &::placeholder {
+            color: #999;
+        }
+    }
+}
+
+.btn-block {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 20px;
+
+    p {
+        margin: 0;
+        color: $color-fg-secondary;
+    }
+
+    a {
+        color: #3498db;
+        text-decoration: none;
+        font-weight: 500;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+// アラートメッセージ
+.alert {
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    font-size: 14px;
+
+    &.alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    &.alert-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    &.alert-info {
+        background-color: #d1ecf1;
+        color: #0c5460;
+        border: 1px solid #bee5eb;
+    }
+
+    &.alert-warning {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeaa7;
+    }
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+}
+
+.help-text {
+    color: #666;
+    font-size: 14px;
+    margin-top: 5px;
+    line-height: 1.4;
+
+    ul {
+        margin: 5px 0 0 20px;
+        padding: 0;
+
+        li {
+            margin-bottom: 2px;
+        }
+    }
+}
+
+// レスポンシブ対応
+@media (max-width: $break-point) {
+    .auth-container {
+        margin: 30px auto;
+        padding: 0 15px;
+    }
+
+    .auth-form {
+        padding: 30px 20px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="password"] {
+        font-size: 16px; // iOS でズームを防ぐ
+    }
+}
