@@ -1,0 +1,104 @@
+// 最新料理ページ専用スタイル
+
+.recent-dishes-container {
+    .recent-list {
+        display: grid;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+
+        @media (min-width: 768px) {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        @media (min-width: 1024px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    .recent-item {
+        background: #fff;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .dish-meta {
+            font-size: 0.875rem;
+            color: #6c757d;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .dish-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: #6c757d;
+
+            .like-form {
+                display: inline;
+            }
+
+            .like-btn {
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: #6c757d;
+                font-size: 0.875rem;
+                padding: 0;
+                transition: color 0.3s ease;
+
+                &:hover {
+                    color: #e74c3c;
+                }
+
+                &.liked {
+                    color: #e74c3c;
+                }
+            }
+
+            .likes {
+                color: #e74c3c;
+            }
+
+            .date {
+                color: #95a5a6;
+            }
+        }
+    }
+
+    .no-dishes {
+        text-align: center;
+        font-size: 1.125rem;
+        color: #6c757d;
+        margin: 2rem 0;
+    }
+
+    .auth-prompt {
+        text-align: center;
+        margin-top: 1.5rem;
+
+        .btn {
+            margin: 0 0.5rem;
+        }
+    }
+
+    .section-footer {
+        text-align: center;
+        margin-top: 2rem;
+    }
+}

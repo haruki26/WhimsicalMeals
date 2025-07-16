@@ -1,8 +1,17 @@
-{% extends 'base.html' %}
+{% extends 'users/base.html' %}
+{% load static %}
+{% load compress %}
 
 {% block title %}ログイン - 気まぐれレシピ研究所{% endblock %}
 
-{% block content %}
+{% block extra_css %}
+{{ block.super }}
+{% compress css %}
+<link rel="stylesheet" type="text/x-scss" href="{% static 'users/scss/pages/login.scss' %}">
+{% endcompress %}
+{% endblock %}
+
+{% block auth_content %}
 <div class="auth-container">
     <div class="auth-form">
         <h2>ログイン</h2>

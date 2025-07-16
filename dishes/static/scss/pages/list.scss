@@ -1,0 +1,125 @@
+// 料理一覧ページのスタイル
+
+// 料理一覧ページ専用スタイル料理一覧ページ専用スタイル
+@import '../../../../static/scss/abstracts/color';
+@import '../../../../static/scss/abstracts/variables';
+
+.dish-list-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+
+    .header-section {
+        text-align: center;
+        margin-bottom: 3rem;
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+    }
+
+    .actions-section {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .dishes-grid {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+
+        .dish-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+
+            &:hover {
+                transform: translateY(-5px);
+            }
+
+            .dish-header {
+                margin-bottom: 1rem;
+
+                .dish-name {
+                    font-size: 1.3rem;
+                    font-weight: 600;
+                    color: #2c3e50;
+                    margin-bottom: 0.5rem;
+                }
+
+                .dish-meta {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 0.9rem;
+                    color: #666;
+
+                    .likes-count {
+                        color: #e91e63;
+                    }
+                }
+            }
+
+            .dish-ingredients {
+                margin-bottom: 1.5rem;
+
+                h4 {
+                    font-size: 0.9rem;
+                    color: #666;
+                    margin-bottom: 0.5rem;
+                }
+
+                .ingredient-tags {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.5rem;
+
+                    .ingredient-tag {
+                        background: #e3f2fd;
+                        color: #1976d2;
+                        padding: 0.25rem 0.75rem;
+                        border-radius: 12px;
+                        font-size: 0.8rem;
+                    }
+                }
+            }
+
+            .dish-actions {
+                text-align: right;
+            }
+        }
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+
+        .empty-content {
+            max-width: 400px;
+            margin: 0 auto;
+
+            .empty-icon {
+                font-size: 4rem;
+                margin-bottom: 1rem;
+            }
+
+            h3 {
+                color: #2c3e50;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                color: #666;
+                margin-bottom: 2rem;
+            }
+        }
+    }
+}

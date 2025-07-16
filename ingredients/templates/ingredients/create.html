@@ -1,9 +1,17 @@
-{% extends "base.html" %}
+{% extends "ingredients/base.html" %}
 {% load static %}
+{% load compress %}
 
 {% block title %}材料登録 - Crazy Recipe Generator{% endblock %}
 
-{% block content %}
+{% block extra_css %}
+{{ block.super }}
+{% compress css %}
+<link rel="stylesheet" type="text/x-scss" href="{% static 'ingredients/scss/pages/form.scss' %}">
+{% endcompress %}
+{% endblock %}
+
+{% block ingredients_content %}
 <div class="ingredients-form-page">
     <div class="container">
         <div class="page-header">

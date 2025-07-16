@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static compress %}
+
+{% block extra_css %}
+{% compress css %}
+<link rel="stylesheet" type="text/x-scss" href="{% static 'dishes/scss/dishes.scss' %}">
+{% endcompress %}
+{% endblock %}
+
+{% block content %}
+<div class="dish-container">
+    {% block dishes_content %}
+    {% endblock %}
+</div>
+{% endblock %}

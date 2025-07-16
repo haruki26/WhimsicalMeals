@@ -10,6 +10,7 @@
     {% compress css %}
     <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/main.scss' %}">
     {% endcompress %}
+    {% block extra_css %}{% endblock %}
     {% block extra_head %}{% endblock %}
 </head>
 <body>

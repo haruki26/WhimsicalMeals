@@ -1,9 +1,17 @@
-{% extends "base.html" %}
+{% extends "dishes/base.html" %}
 {% load static %}
+{% load compress %}
 
 {% block title %}最新の料理{% endblock %}
 
-{% block content %}
+{% block extra_css %}
+{{ block.super }}
+{% compress css %}
+<link rel="stylesheet" type="text/x-scss" href="{% static 'dishes/scss/pages/recent.scss' %}">
+{% endcompress %}
+{% endblock %}
+
+{% block dishes_content %}
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-4xl mx-auto">
         <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">

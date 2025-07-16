@@ -23,11 +23,16 @@ class CoreView(TemplateView):
         recent_dishes = self.get_recent_dishes(limit=3)
         context["recent_dishes"] = recent_dishes
 
+        # トップ3ランキングを取得
+        top_dishes = self.get_top_dishes(limit=3)
+        context["top_dishes"] = top_dishes
+
         # ユーザーのいいね情報を取得
+        all_dishes = list(recent_dishes) + list(top_dishes)
         if self.request.user.is_authenticated:
             liked_dish_ids = Like.objects.filter(
                 user=self.request.user,
-                dish__in=recent_dishes,
+                dish__in=all_dishes,
             ).values_list("dish_id", flat=True)
             context["user_liked_dish_ids"] = list(liked_dish_ids)
         else:
@@ -38,6 +43,19 @@ class CoreView(TemplateView):
     def get_recent_dishes(self, limit: int | None = None) -> QuerySet[GeneratedDish]:
         """最新料理を取得するメソッド."""
         queryset = GeneratedDish.objects.order_by("-created_at").prefetch_related(
+            "ingredients",
+            "user",
+        )
+        if limit:
+            return queryset[:limit]
+        return queryset
+
+    def get_top_dishes(self, limit: int | None = None) -> QuerySet[GeneratedDish]:
+        """人気料理を取得するメソッド(いいね数順)."""
+        queryset = GeneratedDish.objects.order_by(
+            "-likes_count",
+            "-created_at",
+        ).prefetch_related(
             "ingredients",
             "user",
         )

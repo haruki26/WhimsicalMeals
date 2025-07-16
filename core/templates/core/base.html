@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static compress %}
+
+{% block extra_css %}
+{% compress css %}
+<link rel="stylesheet" type="text/x-scss" href="{% static 'core/scss/core.scss' %}">
+{% endcompress %}
+{% endblock %}
+
+{% block content %}
+{% block core_content %}
+{% endblock %}
+{% endblock %}

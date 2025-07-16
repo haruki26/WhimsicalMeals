@@ -1,9 +1,16 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "core/base.html" %}
+{% load static compress %}
 
 {% block title %}Crazy Recipe Generator - 異次元料理生成システム{% endblock %}
 
-{% block content %}
+{% block extra_css %}
+{{ block.super }}
+{% compress css %}
+<link rel="stylesheet" type="text/x-scss" href="{% static 'core/scss/pages/home.scss' %}">
+{% endcompress %}
+{% endblock %}
+
+{% block core_content %}
 <!-- ヒーローセクション -->
 <section class="hero">
     <div class="hero-content">
@@ -98,58 +105,11 @@
     </div>
 </section>
 
-<!-- 人気ランキングセクション -->
-<section class="ranking-section">
+<!-- ランキングセクション -->
+<section class="ranking-section ranking-preview">
     <div class="container">
-        <h2>🔥 今話題の料理名ランキング</h2>
-        <div class="ranking-list">
-            <div class="ranking-item">
-                <span class="rank">1位</span>
-                <div class="dish-info">
-                    <span class="dish-name">謎のトマトキャベツ爆弾</span>
-                    <span class="likes-count">🔥 128 いいね</span>
-                </div>
-            </div>
-            
-            <div class="ranking-item">
-                <span class="rank">2位</span>
-                <div class="dish-info">
-                    <span class="dish-name">伝説のニンジンとタマネギの異次元</span>
-                    <span class="likes-count">❤️ 95 いいね</span>
-                </div>
-            </div>
-            
-            <div class="ranking-item">
-                <span class="rank">3位</span>
-                <div class="dish-info">
-                    <span class="dish-name">幻のジャガイモ怪物</span>
-                    <span class="likes-count">⭐ 87 いいね</span>
-                </div>
-            </div>
-            
-            <div class="ranking-item">
-                <span class="rank">4位</span>
-                <div class="dish-info">
-                    <span class="dish-name">秘伝のブロッコリー入りピーマン混沌</span>
-                    <span class="likes-count">💫 72 いいね</span>
-                </div>
-            </div>
-            
-            <div class="ranking-item">
-                <span class="rank">5位</span>
-                <div class="dish-info">
-                    <span class="dish-name">究極のナス風チーズの禁断</span>
-                    <span class="likes-count">✨ 68 いいね</span>
-                </div>
-            </div>
-        </div>
-        
-        {% if not user.is_authenticated %}
-            <div class="login-prompt">
-                <p>ランキング機能をフルに楽しむには、ログインが必要です。</p>
-                <a href="{% url 'users:login' %}" class="btn btn-primary">今すぐログイン</a>
-            </div>
-        {% endif %}
+        <h2>🏆 人気ランキング TOP3</h2>
+        {% include "components/ranking.html" with dishes=top_dishes show_more_link=True %}
     </div>
 </section>
 

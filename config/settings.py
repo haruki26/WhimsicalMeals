@@ -138,6 +138,17 @@ COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = False
 
+# LibSass settings for SCSS compilation
+LIBSASS_INCLUDE_PATHS = [
+    BASE_DIR / "static" / "scss",
+]
+
+# Compressor settings for SCSS
+COMPRESS_CSS_FILTERS = [
+    "compressor.filters.css_default.CssAbsoluteFilter",
+    "compressor.filters.cssmin.rCSSMinFilter",
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

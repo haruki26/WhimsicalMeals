@@ -40,14 +40,34 @@ class RankingListView(ListView):
     model = GeneratedDish
     template_name = "dishes/ranking.html"
     context_object_name = "dishes"
-    paginate_by = 20
+    paginate_by = 10
 
     def get_queryset(self) -> QuerySet[GeneratedDish]:
         """いいね数順で料理を取得."""
         return GeneratedDish.objects.order_by(
             "-likes_count",
             "-created_at",
-        ).prefetch_related("ingredients", "user")
+        ).prefetch_related(
+            "ingredients",
+            "user",
+        )
+
+    def get_context_data(self, **kwargs: object) -> dict[str, Any]:
+        """コンテキストデータを追加."""
+        context = super().get_context_data(**kwargs)
+
+        # ユーザーのいいね情報を取得
+        if self.request.user.is_authenticated:
+            dishes = context["dishes"]
+            liked_dish_ids = Like.objects.filter(
+                user=self.request.user,
+                dish__in=dishes,
+            ).values_list("dish_id", flat=True)
+            context["user_liked_dish_ids"] = list(liked_dish_ids)
+        else:
+            context["user_liked_dish_ids"] = []
+
+        return context
 
 
 class DishGenerateView(LoginRequiredMixin, View):

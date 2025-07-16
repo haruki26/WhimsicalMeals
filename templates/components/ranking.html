@@ -1,0 +1,66 @@
+{% comment %}
+ランキング表示コンポーネント
+使用方法: 
+- トップページ: {% include "components/ranking.html" with dishes=top_dishes show_more_link=True %}
+- ランキングページ: {% include "components/ranking.html" with dishes=dishes show_more_link=False %}
+
+注意: データの制限（TOP3など）はビュー側で実装すること
+{% endcomment %}
+
+{% if dishes %}
+    <div class="ranking-list">
+        {% for dish in dishes %}
+            {% if page_obj %}
+                {% with rank=forloop.counter|add:page_obj.start_index|add:"-1" %}
+                    <div class="ranking-item {% if rank <= 3 %}rank-{{ rank }}{% endif %}">
+                        <div class="ranking-number">{{ rank }}</div>
+                {% endwith %}
+            {% else %}
+                <div class="ranking-item {% if forloop.counter <= 3 %}rank-{{ forloop.counter }}{% endif %}">
+                    <div class="ranking-number">{{ forloop.counter }}</div>
+            {% endif %}
+                <div class="dish-info">
+                    <h3>{{ dish.name }}</h3>
+                    <p class="dish-meta">
+                        作成者: {{ dish.user.username }} | 
+                        {{ dish.created_at|date:"m/d H:i" }}
+                    </p>
+                    <p class="ingredients-preview">
+                        材料: {% for ingredient in dish.ingredients.all %}{{ ingredient.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    </p>
+                </div>
+                <div class="dish-stats">
+                    {% if user.is_authenticated and user != dish.user %}
+                        <form method="post" action="{% url 'dishes:toggle_like' dish.id %}" class="like-form">
+                            {% csrf_token %}
+                            {% if dish.id in user_liked_dish_ids %}
+                                <button type="submit" class="like-btn liked">
+                                    ❤️ {{ dish.likes_count }}
+                                </button>
+                            {% else %}
+                                <button type="submit" class="like-btn">
+                                    🤍 {{ dish.likes_count }}
+                                </button>
+                            {% endif %}
+                        </form>
+                    {% else %}
+                        <span class="likes">❤️ {{ dish.likes_count }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% if show_more_link %}
+        <div class="section-footer">
+            <a href="{% url 'dishes:ranking' %}" class="btn btn-outline">ランキングをもっと見る</a>
+        </div>
+    {% endif %}
+{% else %}
+    <p class="no-dishes">まだランキングデータがありません。</p>
+    {% if not user.is_authenticated %}
+        <div class="auth-prompt">
+            <a href="{% url 'users:login' %}" class="btn btn-primary">ログインして料理を作成</a>
+            <a href="{% url 'users:signup' %}" class="btn btn-secondary">新規登録</a>
+        </div>
+    {% endif %}
+{% endif %}
