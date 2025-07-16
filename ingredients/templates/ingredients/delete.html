@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}材料削除 - Crazy Recipe Generator{% endblock %}
+
+{% block content %}
+<div class="ingredients-form-page">
+    <div class="container">
+        <div class="page-header">
+            <h1>🗑️ 材料の削除</h1>
+            <p>この操作は取り消すことができません。</p>
+        </div>
+
+        <div class="delete-confirmation">
+            <div class="warning-card">
+                <div class="warning-icon">⚠️</div>
+                <h3>本当に削除しますか？</h3>
+                <p class="delete-target">
+                    材料「<strong>{{ object.name }}</strong>」を削除しようとしています。
+                </p>
+                <p class="warning-text">
+                    この材料を削除すると、この材料を使用して生成された料理との関連も失われる可能性があります。
+                </p>
+            </div>
+
+            <div class="form-actions">
+                <form method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        🗑️ 削除を実行
+                    </button>
+                </form>
+                <a href="{% url 'ingredients:list' %}" class="btn btn-secondary">
+                    ❌ キャンセル
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

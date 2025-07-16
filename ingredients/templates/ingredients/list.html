@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}材料管理 - Crazy Recipe Generator{% endblock %}
+
+{% block content %}
+<div class="ingredients-page">
+    <div class="container">
+        <div class="page-header">
+            <h1>🥬 材料管理</h1>
+            <p>登録された材料を管理できます。材料を追加して、架空料理を生成しましょう！</p>
+        </div>
+
+        <div class="ingredients-actions">
+            <a href="{% url 'ingredients:create' %}" class="btn btn-primary">
+                ➕ 新しい材料を追加
+            </a>
+            <a href="{% url 'ingredients:quick_add' %}" class="btn btn-secondary">
+                ⚡ クイック追加
+            </a>
+        </div>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="ingredients-list">
+            {% if ingredients %}
+                <div class="ingredients-grid">
+                    {% for ingredient in ingredients %}
+                        <div class="ingredient-card">
+                            <div class="ingredient-info">
+                                <h3 class="ingredient-name">{{ ingredient.name }}</h3>
+                                <p class="ingredient-date">登録日: {{ ingredient.created_at|date:"Y年n月j日" }}</p>
+                            </div>
+                            <div class="ingredient-actions">
+                                <a href="{% url 'ingredients:update' ingredient.pk %}" class="btn btn-small btn-outline">
+                                    ✏️ 編集
+                                </a>
+                                <a href="{% url 'ingredients:delete' ingredient.pk %}" class="btn btn-small btn-danger">
+                                    🗑️ 削除
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                {% if is_paginated %}
+                    <div class="pagination">
+                        <span class="pagination-info">
+                            {{ page_obj.start_index }}〜{{ page_obj.end_index }} / {{ paginator.count }}件
+                        </span>
+                        
+                        <div class="pagination-links">
+                            {% if page_obj.has_previous %}
+                                <a href="?page=1" class="btn btn-pagination">最初</a>
+                                <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-pagination">前へ</a>
+                            {% endif %}
+
+                            <span class="current-page">
+                                {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                            </span>
+
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}" class="btn btn-pagination">次へ</a>
+                                <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-pagination">最後</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">🥘</div>
+                    <h3>まだ材料が登録されていません</h3>
+                    <p>材料を追加して、面白い架空料理を生成してみましょう！</p>
+                    <a href="{% url 'ingredients:create' %}" class="btn btn-primary btn-large">
+                        最初の材料を追加する
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

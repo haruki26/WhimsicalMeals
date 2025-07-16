@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}材料登録 - Crazy Recipe Generator{% endblock %}
+
+{% block content %}
+<div class="ingredients-form-page">
+    <div class="container">
+        <div class="page-header">
+            <h1>🥬 新しい材料を追加</h1>
+            <p>冷蔵庫にある材料を登録して、架空料理の生成に使いましょう！</p>
+        </div>
+
+        <div class="form-container">
+            <form method="post" class="ingredient-form">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}" class="form-label">
+                        {{ form.name.label }}
+                    </label>
+                    {{ form.name }}
+                    {% if form.name.help_text %}
+                        <small class="form-help">{{ form.name.help_text }}</small>
+                    {% endif %}
+                    {% if form.name.errors %}
+                        <div class="form-errors">
+                            {% for error in form.name.errors %}
+                                <p class="error-message">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        ✅ 材料を登録
+                    </button>
+                    <a href="{% url 'ingredients:list' %}" class="btn btn-secondary">
+                        ❌ キャンセル
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <div class="tips">
+            <h3>💡 登録のコツ</h3>
+            <ul>
+                <li>具体的な材料名で登録すると、より面白い料理名が生成されます</li>
+                <li>「期限切れの◯◯」「謎の◯◯」など、ユニークな表現も歓迎！</li>
+                <li>同じ材料名は重複して登録できません</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

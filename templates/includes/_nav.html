@@ -1,16 +1,32 @@
-<nav class="nav">
-    <ul class="nav-list">
-        <li class="nav-item">
-            <a href="/" class="nav-link">ホーム</a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">サービス</a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">会社情報</a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">お問い合わせ</a>
-        </li>
-    </ul>
+<nav class="nav-menu" id="nav-menu">
+    {% if user.is_authenticated %}
+        <a href="{% url 'ingredients:list' %}" class="nav-link">🥬 材料管理</a>
+        <a href="#" class="nav-link">🎲 料理生成</a>
+        <a href="#" class="nav-link">📋 マイ料理</a>
+    {% endif %}
+    <a href="#" class="nav-link">🏆 ランキング</a>
 </nav>
+
+<button class="nav-toggle" id="nav-toggle">
+    <span>☰</span>
+</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    
+    navToggle.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+        this.classList.toggle('active');
+    });
+    
+    // メニュー外をクリックした時に閉じる
+    document.addEventListener('click', function(event) {
+        if (!navToggle.contains(event.target) && !navMenu.contains(event.target)) {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+        }
+    });
+});
+</script>

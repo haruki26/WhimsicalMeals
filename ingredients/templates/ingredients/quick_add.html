@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}クイック材料追加 - Crazy Recipe Generator{% endblock %}
+
+{% block content %}
+<div class="ingredients-form-page quick-add">
+    <div class="container">
+        <div class="page-header">
+            <h1>⚡ クイック材料追加</h1>
+            <p>素早く材料を追加できます。</p>
+        </div>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="form-container compact">
+            <form method="post" class="ingredient-form quick-form">
+                {% csrf_token %}
+                
+                <div class="form-group inline">
+                    {{ form.name }}
+                    <button type="submit" class="btn btn-primary">
+                        ➕ 追加
+                    </button>
+                </div>
+                
+                {% if form.name.errors %}
+                    <div class="form-errors">
+                        {% for error in form.name.errors %}
+                            <p class="error-message">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+
+        <div class="quick-actions">
+            <a href="{% url 'ingredients:list' %}" class="btn btn-secondary">
+                📋 材料一覧に戻る
+            </a>
+            <a href="{% url 'ingredients:create' %}" class="btn btn-outline">
+                📝 詳細な登録フォーム
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
