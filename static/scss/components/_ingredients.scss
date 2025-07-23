@@ -309,16 +309,6 @@
             }
         }
     }
-
-    .quick-actions {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-
-        @media (max-width: 768px) {
-            flex-direction: column;
-        }
-    }
 }
 
 // 削除確認ページのスタイル

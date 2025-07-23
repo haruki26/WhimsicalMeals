@@ -1,12 +1,10 @@
 from typing import Any
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet
 from django.forms import BaseModelForm
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
@@ -90,18 +88,3 @@ class IngredientDeleteView(LoginRequiredMixin, DeleteView):
             ingredient_name = ingredient.name
             messages.success(request, f"材料「{ingredient_name}」を削除しました。")
         return super().delete(request, *args, **kwargs)
-
-
-@login_required
-def ingredient_quick_add(request: HttpRequest) -> HttpResponse:
-    """材料のクイック追加 (Ajax対応)."""
-    if request.method == "POST":
-        form = IngredientForm(user=request.user, data=request.POST)  # type: ignore[arg-type]
-        if form.is_valid():
-            ingredient = form.save()
-            messages.success(request, f"材料「{ingredient.name}」を登録しました。")
-            return redirect("ingredients:list")
-    else:
-        form = IngredientForm(user=request.user)  # type: ignore[arg-type]
-
-    return render(request, "ingredients/quick_add.html", {"form": form})

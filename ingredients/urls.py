@@ -13,6 +13,4 @@ urlpatterns = [
     path("<int:pk>/update/", views.IngredientUpdateView.as_view(), name="update"),
     # 材料削除
     path("<int:pk>/delete/", views.IngredientDeleteView.as_view(), name="delete"),
-    # クイック追加
-    path("quick-add/", views.ingredient_quick_add, name="quick_add"),
 ]
