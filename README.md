@@ -18,7 +18,7 @@ cd WhimsicalMeals
 ### 2. VS Code Dev Container で開く
 
 #### 前提条件
-- [Docker Desktop](https://www.docker.com/products/docker-desktop) がインストールされていること
+- [Docker](https://www.docker.com/ja-jp/)または[Docker Desktop](https://www.docker.com/products/docker-desktop) がインストールされていること
 - [Visual Studio Code](https://code.visualstudio.com/) がインストールされていること
 - [Dev Containers拡張機能](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) がインストールされていること
 
