@@ -12,7 +12,7 @@ urlpatterns = [
     path("save/", views.SaveDishView.as_view(), name="save"),
     path("ranking/", views.RankingListView.as_view(), name="ranking"),
     path("recent/", views.RecentDishesView.as_view(), name="recent"),
-    path("like/<int:dish_id>/", views.ToggleLikeView.as_view(), name="toggle_like"),
-    path("delete/<int:dish_id>/", views.DishDeleteView.as_view(), name="delete"),
+    path("<int:dish_id>/like/", views.ToggleLikeView.as_view(), name="toggle_like"),
+    path("<int:dish_id>/delete/", views.DishDeleteView.as_view(), name="delete"),
     path("demo/", views.DemoGenerateView.as_view(), name="demo"),
 ]
