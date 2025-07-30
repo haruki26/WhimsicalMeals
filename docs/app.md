@@ -188,11 +188,10 @@ Django標準のUserモデルを使用。
 ## 5. 技術スタック
 
 - **フレームワーク**: Django (Python)
-- **データベース**: SQLite (開発時), PostgreSQLなど (本番デプロイ時)
+- **データベース**: SQLite (開発時)
 - **フロントエンド**:
   - HTML, CSS (CSS変数またはSass/SCSS)
   - JavaScript (必要に応じて)
-- **UIライブラリ**: Tailwind CSS (推奨) または素のCSSでカスタマイズ
 
 ## 6. 開発ロードマップ
 

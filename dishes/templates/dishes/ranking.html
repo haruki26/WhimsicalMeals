@@ -4,6 +4,13 @@
 
 {% block title %}料理ランキング - 気まぐれレシピ研究所{% endblock %}
 
+{% block extra_css %}
+{{ block.super }}
+{% compress css %}
+<link rel="stylesheet" type="text/x-scss" href="{% static 'dishes/scss/pages/ranking.scss' %}">
+{% endcompress %}
+{% endblock %}
+
 {% block dishes_content %}
 <section class="ranking-section">
     <div class="container">

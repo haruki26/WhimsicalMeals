@@ -1,9 +1,17 @@
-{% extends "base.html" %}
+{% extends "ingredients/base.html" %}
 {% load static %}
+{% load compress %}
 
 {% block title %}材料削除 - Crazy Recipe Generator{% endblock %}
 
-{% block content %}
+{% block extra_css %}
+{{ block.super }}
+{% compress css %}
+<link rel="stylesheet" type="text/x-scss" href="{% static 'ingredients/scss/pages/form.scss' %}">
+{% endcompress %}
+{% endblock %}
+
+{% block ingredients_content %}
 <div class="ingredients-form-page">
     <div class="container">
         <div class="page-header">
@@ -34,6 +42,15 @@
                     ❌ キャンセル
                 </a>
             </div>
+        </div>
+
+        <div class="tips">
+            <h3>💡 削除について</h3>
+            <ul>
+                <li>削除された材料は元に戻すことができません</li>
+                <li>削除後も、過去に生成された料理は残り続けます</li>
+                <li>間違えて削除した場合は、同じ名前で再度登録してください</li>
+            </ul>
         </div>
     </div>
 </div>

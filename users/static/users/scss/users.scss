@@ -4,8 +4,12 @@
 // 認証フォーム関連のスタイル
 .auth-container {
     max-width: 400px;
-    margin: 60px auto;
+    margin: 2rem auto;
     padding: 0 20px;
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .auth-form {
@@ -138,8 +142,9 @@
 // レスポンシブ対応
 @media (max-width: $break-point) {
     .auth-container {
-        margin: 30px auto;
+        margin: 1rem auto;
         padding: 0 15px;
+        min-height: calc(100vh - 120px);
     }
 
     .auth-form {

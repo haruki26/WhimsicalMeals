@@ -2,6 +2,8 @@
     display: flex;
     gap: 2rem;
     align-items: center;
+    flex-shrink: 1; // 必要に応じて縮小可能
+    overflow-x: auto; // 水平スクロールを可能にする（最後の手段）
 
     .nav-link {
         color: $color-fg-primary;
@@ -10,6 +12,8 @@
         padding: 0.5rem 1rem;
         border-radius: 6px;
         transition: all 0.3s ease;
+        white-space: nowrap; // テキストの折り返しを防ぐ
+        flex-shrink: 0; // リンクのサイズを固定
 
         &:hover {
             color: #3498db;

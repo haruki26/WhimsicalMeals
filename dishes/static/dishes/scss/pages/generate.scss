@@ -1,13 +1,12 @@
 // 料理生成ページのスタイル
 
-// 料理生成ページ専用スタイル
-
 .dish-generate-container {
     max-width: 800px;
     margin: 2rem auto;
     padding: 0 2rem;
+    min-height: calc(100vh - 200px);
 
-    .page-header {
+    .header-section {
         text-align: center;
         margin-bottom: 3rem;
 
@@ -20,70 +19,288 @@
         p {
             color: #666;
             font-size: 1.1rem;
+            line-height: 1.6;
         }
     }
 
-    .generation-form {
-        background: #fff;
-        border-radius: 12px;
-        padding: 2rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    .insufficient-ingredients {
         margin-bottom: 2rem;
 
-        .form-group {
-            margin-bottom: 1.5rem;
+        .alert {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
 
-            label {
-                display: block;
-                font-weight: 600;
-                margin-bottom: 0.5rem;
-                color: #2c3e50;
+            h3 {
+                color: #e65100;
+                margin-bottom: 1rem;
+                font-size: 1.3rem;
             }
-        }
 
-        .btn-primary {
-            width: 100%;
-            padding: 1rem;
-            font-size: 1.1rem;
+            p {
+                color: #666;
+                margin-bottom: 0.5rem;
+                line-height: 1.5;
+            }
+
+            .btn {
+                margin-top: 1rem;
+                padding: 12px 24px;
+                font-weight: 600;
+            }
         }
     }
 
-    .generated-results {
-        background: #f8f9fa;
+    .ingredients-info {
+        background: linear-gradient(135deg, #e8f5e8 0%, #f0f8ff 100%);
         border-radius: 12px;
         padding: 2rem;
-        margin-top: 2rem;
+        margin-bottom: 2rem;
+        border: 2px solid #4caf50;
 
         h3 {
-            color: #2c3e50;
+            color: #2e7d32;
             margin-bottom: 1.5rem;
+            font-size: 1.3rem;
             text-align: center;
         }
 
-        .dish-options {
-            display: grid;
-            gap: 1rem;
+        .ingredient-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
 
-            .dish-option {
-                background: #fff;
-                border-radius: 8px;
-                padding: 1.5rem;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                transition: transform 0.3s ease;
+            .ingredient-tag {
+                background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+                color: #fff;
+                padding: 0.75rem 1.25rem;
+                border-radius: 25px;
+                font-size: 0.9rem;
+                font-weight: 600;
+                box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+                transition: all 0.3s ease;
+                border: 2px solid #4caf50;
 
                 &:hover {
                     transform: translateY(-2px);
+                    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
+                    background: linear-gradient(135deg, #66bb6a 0%, #4caf50 100%);
+                }
+            }
+        }
+    }
+
+    .generate-section {
+        text-align: center;
+        margin-bottom: 3rem;
+
+        .generate-form {
+            .btn-generate {
+                background: linear-gradient(135deg, #e91e63 0%, #ad1457 100%);
+                color: #fff;
+                padding: 1.5rem 3rem;
+                font-size: 1.2rem;
+                font-weight: 700;
+                border: none;
+                border-radius: 50px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 8px rgba(233, 30, 99, 0.3);
+                display: inline-flex;
+                align-items: center;
+                gap: 0.75rem;
+
+                .btn-icon {
+                    font-size: 1.5rem;
+                }
+
+                &:hover {
+                    transform: translateY(-3px);
+                    box-shadow: 0 6px 16px rgba(233, 30, 99, 0.4);
+                    background: linear-gradient(135deg, #ec407a 0%, #e91e63 100%);
+                }
+
+                &:active {
+                    transform: translateY(-1px);
+                }
+            }
+        }
+    }
+
+    .generated-dishes {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+
+        h3 {
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .dishes-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+
+            .dish-card {
+                background: #fff;
+                border-radius: 12px;
+                padding: 2rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s ease;
+                border: 2px solid transparent;
+
+                &:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+                    border-color: #e91e63;
                 }
 
                 .dish-name {
-                    font-size: 1.3rem;
-                    font-weight: 600;
+                    font-size: 1.4rem;
+                    font-weight: 700;
                     color: #e91e63;
-                    margin-bottom: 1rem;
+                    margin-bottom: 1.5rem;
+                    text-align: center;
+                    line-height: 1.4;
                 }
 
-                .dish-actions {
-                    text-align: right;
+                .save-form {
+                    text-align: center;
+
+                    .btn-save {
+                        background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+                        color: #fff;
+                        padding: 10px 20px;
+                        border: none;
+                        border-radius: 25px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+
+                        &:hover {
+                            transform: translateY(-2px);
+                            box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
+                        }
+                    }
+                }
+            }
+        }
+
+        .regenerate-section {
+            text-align: center;
+
+            .btn-secondary {
+                background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+                color: #fff;
+                padding: 12px 24px;
+                border: none;
+                border-radius: 25px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 2px 4px rgba(255, 152, 0, 0.3);
+
+                &:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 8px rgba(255, 152, 0, 0.4);
+                }
+            }
+        }
+    }
+
+    .links-section {
+        .quick-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+
+            .btn-outline {
+                background: #fff;
+                color: #3498db;
+                border: 2px solid #3498db;
+                padding: 10px 16px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+
+                &:hover {
+                    background: #3498db;
+                    color: #fff;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+                }
+            }
+        }
+    }
+
+    // レスポンシブ対応
+    @media (max-width: 768px) {
+        padding: 0 1rem;
+
+        .header-section {
+            margin-bottom: 2rem;
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .ingredients-info {
+            padding: 1.5rem;
+
+            .ingredient-tags {
+                gap: 0.5rem;
+
+                .ingredient-tag {
+                    padding: 0.5rem 1rem;
+                    font-size: 0.8rem;
+                }
+            }
+        }
+
+        .generate-section {
+            .btn-generate {
+                padding: 1.25rem 2rem;
+                font-size: 1.1rem;
+            }
+        }
+
+        .generated-dishes {
+            padding: 1.5rem;
+
+            .dishes-grid {
+                gap: 1rem;
+
+                .dish-card {
+                    padding: 1.5rem;
+
+                    .dish-name {
+                        font-size: 1.2rem;
+                    }
+                }
+            }
+        }
+
+        .links-section {
+            .quick-links {
+                flex-direction: column;
+                align-items: center;
+
+                .btn-outline {
+                    width: 100%;
+                    max-width: 300px;
+                    text-align: center;
                 }
             }
         }

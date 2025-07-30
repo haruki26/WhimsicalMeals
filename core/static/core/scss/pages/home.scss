@@ -196,3 +196,84 @@
         }
     }
 }
+
+// CTAセクション
+.cta-section {
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    text-align: center;
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        color: #fff;
+
+        @media (max-width: 768px) {
+            font-size: 2rem;
+        }
+    }
+
+    p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+        line-height: 1.6;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        .btn {
+            font-size: 1.1rem;
+            padding: 15px 30px;
+            
+            &.btn-large {
+                padding: 18px 36px;
+                font-size: 1.2rem;
+                font-weight: 600;
+            }
+
+            &.btn-primary {
+                background-color: #fff;
+                color: #667eea;
+                border: 2px solid #fff;
+
+                &:hover {
+                    background-color: #f8f9fa;
+                    transform: translateY(-2px);
+                }
+            }
+
+            &.btn-secondary {
+                background-color: transparent;
+                color: #fff;
+                border: 2px solid #fff;
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                    transform: translateY(-2px);
+                }
+            }
+        }
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            align-items: center;
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    }
+}

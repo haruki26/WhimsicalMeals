@@ -1,31 +1,46 @@
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section">
-            <h3>会社情報</h3>
+            <h3>気まぐれレシピ研究所について</h3>
             <ul>
-                <li><a href="#">会社概要</a></li>
+                <li><a href="#">アプリについて</a></li>
+                <li><a href="#">使い方ガイド</a></li>
+                <li><a href="#">よくある質問</a></li>
                 <li><a href="#">お問い合わせ</a></li>
-                <li><a href="#">採用情報</a></li>
             </ul>
         </div>
         <div class="footer-section">
-            <h3>サービス</h3>
+            <h3>発見する</h3>
             <ul>
-                <li><a href="#">サービス1</a></li>
-                <li><a href="#">サービス2</a></li>
+                <li><a href="{% url 'index' %}">人気の架空料理</a></li>
+                <li><a href="#ranking">ランキング</a></li>
+                <li><a href="{% url 'ingredients:list' %}">みんなの材料</a></li>
+                <li><a href="#new-dishes">新着料理</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>コミュニティ</h3>
+            <ul>
+                <li><a href="#">料理投稿ガイドライン</a></li>
+                <li><a href="#">利用規約</a></li>
+                <li><a href="#">プライバシーポリシー</a></li>
                 <li><a href="#">サポート</a></li>
             </ul>
         </div>
         <div class="footer-section">
             <h3>フォローする</h3>
             <div class="social-links">
-                <a href="#" class="social-link">Twitter</a>
-                <a href="#" class="social-link">Facebook</a>
-                <a href="#" class="social-link">LinkedIn</a>
+                <a href="#" class="social-link" aria-label="Twitter">🐦 Twitter</a>
+                <a href="#" class="social-link" aria-label="Instagram">📷 Instagram</a>
+                <a href="#" class="social-link" aria-label="YouTube">🎥 YouTube</a>
             </div>
+            <p class="app-description">
+                冷蔵庫の材料から<br>
+                誰も見たことのない料理を
+            </p>
         </div>
     </div>
     <div class="footer-bottom">
-        <p>&copy; 2025 My Django Project. All rights reserved.</p>
+        <p>&copy; 2025 まやかしキッチン - 架空料理生成アプリ. All rights reserved.</p>
     </div>
 </footer>

@@ -13,7 +13,7 @@
 
     .page-header {
         text-align: center;
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
 
         h1 {
             font-size: 2.5rem;
@@ -27,6 +27,35 @@
         }
     }
 
+    .add-ingredient-section {
+        text-align: center;
+        margin: 3rem 0;
+        padding: 2rem 0;
+
+        .btn-add-ingredient {
+            font-size: 1.1rem;
+            padding: 15px 30px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(39, 174, 96, 0.2);
+
+            &:hover {
+                background-color: #219a52;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(39, 174, 96, 0.3);
+            }
+
+            &:active {
+                transform: translateY(0);
+            }
+        }
+    }
+
     .actions-section {
         text-align: center;
         margin-bottom: 2rem;
@@ -37,6 +66,12 @@
     }
 
     // ページ固有のグリッドカスタマイゼーション
+    .ingredients-list {
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 2px solid #e9ecef;
+    }
+
     .ingredients-grid {
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 
@@ -93,6 +128,36 @@
                 color: #666;
                 margin-bottom: 2rem;
             }
+        }
+    }
+
+    // レスポンシブ対応
+    @media (max-width: 768px) {
+        .container {
+            padding: 0 1rem;
+        }
+
+        .page-header {
+            margin-bottom: 1.5rem;
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .add-ingredient-section {
+            margin: 2rem 0;
+            padding: 1.5rem 0;
+
+            .btn-add-ingredient {
+                font-size: 1rem;
+                padding: 12px 24px;
+            }
+        }
+
+        .ingredients-list {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
         }
     }
 }

@@ -1,9 +1,17 @@
-{% extends "base.html" %}
+{% extends "ingredients/base.html" %}
 {% load static %}
+{% load compress %}
 
 {% block title %}材料編集 - Crazy Recipe Generator{% endblock %}
 
-{% block content %}
+{% block extra_css %}
+{{ block.super }}
+{% compress css %}
+<link rel="stylesheet" type="text/x-scss" href="{% static 'ingredients/scss/pages/form.scss' %}">
+{% endcompress %}
+{% endblock %}
+
+{% block ingredients_content %}
 <div class="ingredients-form-page">
     <div class="container">
         <div class="page-header">
@@ -41,6 +49,15 @@
                     </a>
                 </div>
             </form>
+        </div>
+
+        <div class="tips">
+            <h3>💡 編集のポイント</h3>
+            <ul>
+                <li>材料名は他のユーザーと重複しないように設定してください</li>
+                <li>具体的で分かりやすい名前にすると、より面白い料理名が生成されます</li>
+                <li>編集後、すでに生成された料理にも新しい名前が反映されます</li>
+            </ul>
         </div>
     </div>
 </div>
