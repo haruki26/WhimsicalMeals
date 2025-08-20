@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
+{% load static compress %}
 
 {% block title %}料理生成デモ - 気まぐれレシピ研究所{% endblock %}
+
+{% block extra_css %}
+{{ block.super }}
+{% compress css %}
+<link rel="stylesheet" type="text/x-scss" href="{% static 'dishes/scss/pages/demo.scss' %}">
+{% endcompress %}
+{% endblock %}
 
 {% block content %}
 <div class="demo-container">

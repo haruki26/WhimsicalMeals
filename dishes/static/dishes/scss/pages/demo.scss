@@ -1,0 +1,249 @@
+@import '../../../../../static/scss/abstracts/color';
+@import '../../../../../static/scss/abstracts/variables';
+
+.demo-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+  color: $color-fg-primary;
+}
+
+.header-section {
+  text-align: center;
+  margin-bottom: 24px;
+
+  h1 {
+    margin: 0 0 8px;
+    font-size: clamp(24px, 3vw, 32px);
+  }
+
+  p {
+    margin: 0 auto 12px;
+    color: $color-fg-secondary;
+  }
+}
+
+.demo-notice {
+  background: $color-bg-tertiary;
+  border: 1px dashed #f5d36f;
+  color: $color-fg-secondary;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.demo-form-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  margin: 16px 0 24px;
+}
+
+.demo-form {
+  display: grid;
+  gap: 16px;
+}
+
+.form-group {
+  display: grid;
+  gap: 8px;
+
+  label {
+    font-weight: 600;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    background: #fff;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
+    &:focus {
+      border-color: #3498db;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+    }
+  }
+
+  .form-help {
+    color: $color-fg-tertiary;
+    font-size: 12px;
+  }
+}
+
+.btn-generate {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 250px;
+  justify-content: center;
+  // center the button within the grid form
+  justify-self: center;
+}
+
+.demo-examples {
+  margin: 8px 0 24px;
+
+  h3 {
+    margin: 0 0 8px;
+  }
+}
+
+.example-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.example-tag {
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  color: $color-fg-secondary;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: #bbb;
+    transform: translateY(-1px);
+  }
+}
+
+.demo-results {
+  display: grid;
+  gap: 20px;
+}
+
+.input-materials {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+
+  h3 {
+    margin: 0 0 12px;
+  }
+}
+
+.ingredient-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ingredient-tag {
+  background: $color-bg-secondary;
+  color: $color-fg-primary;
+  padding: 6px 10px;
+  border-radius: 14px;
+  font-size: 14px;
+}
+
+.generated-dishes {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+
+  h3 {
+    margin: 0 0 12px;
+  }
+}
+
+.dishes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+
+  @media (min-width: $break-point) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.dish-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 14px;
+  min-height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .dish-name {
+    margin: 0;
+    font-size: clamp(14px, 2.2vw, 18px);
+  }
+}
+
+.demo-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: $color-accent-pink;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.demo-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+// button variants used in this page
+.btn-outline {
+  background: transparent;
+  color: #3498db;
+  border: 1px solid #3498db;
+
+  &:hover {
+    background: rgba(52, 152, 219, 0.08);
+    transform: translateY(-2px);
+  }
+}
+
+.signup-prompt {
+  margin-top: 8px;
+}
+
+.prompt-card {
+  background: linear-gradient(180deg, #ffffff, #fffdf7);
+  border: 1px solid #f0e6c8;
+  border-radius: 12px;
+  padding: 20px;
+  display: grid;
+  gap: 12px;
+  text-align: center;
+
+  h3 {
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+    color: $color-fg-secondary;
+  }
+
+  .prompt-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
